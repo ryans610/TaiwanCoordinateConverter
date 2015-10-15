@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>TPC Coordinate Convert</title>
+	<script src="TPCCoordinate.js"></script>
+</head>
+<body>
+	<script>
+		window.onload=function(){
+			document.getElementById("TPCC").addEventListener("click",function(e){
+				var c=TPCCConvert.TPCToT67(document.getElementById("TPC").value);
+				document.getElementById("TPCOut").value=c.X+","+c.Y;
+			});
+			document.getElementById("T67C").addEventListener("click",function(e){
+				document.getElementById("T67Out").value=TPCCConvert.T67ToTPC({
+					X:document.getElementById("T67X").value,
+					Y:document.getElementById("T67Y").value
+				});
+			});
+		};
+	</script>
+	<form action="">
+		<fieldset>
+			<legend>台電座標轉T67座標</legend>
+			<label for="TPC">台電座標：</label>
+			<input type="text" id="TPC" value="R1998EE79"><br>
+			<label for="TPCOut">T67座標：</label>
+			<output id="TPCOut"></output><br>
+			<button id="TPCC" type="button">轉換</button>
+		</fieldset>
+		<fieldset>
+			<legend>T67座標轉台電座標</legend>
+			<label for="T67X">T67座標 X：</label>
+			<input type="number" id="T67X" value="265670">
+			<label for="T67Y">Y:</label>
+			<input type="number" id="T67Y" value="2549490"><br>
+			<label for="T67Out">台電座標：</label>
+			<output id="T67Out"></output><br>
+			<button id="T67C" type="button">轉換</button>
+		</fieldset>
+	</form>
+</body>
+</html>
