@@ -8,36 +8,88 @@
 <body>
 	<script>
 		window.onload=function(){
-			document.getElementById("TPCC").addEventListener("click",function(e){
-				var c=TPCCConvert.TPCToT67(document.getElementById("TPC").value);
-				document.getElementById("TPCOut").value=c.X+","+c.Y;
+			document.getElementById("ATPCC").addEventListener("click",function(){
+				var c=TPCCConvert.TPCToT67(document.getElementById("ATPC").value);
+				document.getElementById("AT67X").value=c.X;
+				document.getElementById("AT67Y").value=c.Y;
 			});
-			document.getElementById("T67C").addEventListener("click",function(e){
-				document.getElementById("T67Out").value=TPCCConvert.T67ToTPC({
-					X:document.getElementById("T67X").value,
-					Y:document.getElementById("T67Y").value
+			document.getElementById("AT67C").addEventListener("click",function(){
+				document.getElementById("ATPC").value=TPCCConvert.T67ToTPC({
+					X:document.getElementById("AT67X").value,
+					Y:document.getElementById("AT67Y").value
 				});
+			});
+			document.getElementById("BT67C").addEventListener("click",function(){
+				var c=TPCCConvert.T67ToT97({
+					X:document.getElementById("BT67X").value,
+					Y:document.getElementById("BT67Y").value
+				});
+				document.getElementById("BT97X").value=c.X;
+				document.getElementById("BT97Y").value=c.Y;
+			});
+			document.getElementById("BT97C").addEventListener("click",function(){
+				var c=TPCCConvert.T97ToT67({
+					X:document.getElementById("BT97X").value,
+					Y:document.getElementById("BT97Y").value
+				});
+				document.getElementById("BT67X").value=c.X;
+				document.getElementById("BT67Y").value=c.Y;
+			});
+			document.getElementById("CT97C").addEventListener("click",function(){
+				var c=TPCCConvert.T97ToWGS84({
+					X:document.getElementById("CT97X").value,
+					Y:document.getElementById("CT97Y").value
+				});
+				document.getElementById("CWGS84Lat").value=c.Lat;
+				document.getElementById("CWGS84Lon").value=c.Lon;
+			});
+			document.getElementById("CWGS84C").addEventListener("click",function(){
+				var c=TPCCConvert.WGS84ToT97({
+					Lat:document.getElementById("CWGS84Lat").value,
+					Lon:document.getElementById("CWGS84Lon").value
+				});
+				document.getElementById("CT97X").value=c.X;
+				document.getElementById("CT97Y").value=c.Y;
 			});
 		};
 	</script>
 	<form action="">
-		<fieldset>
-			<legend>台電座標轉T67座標</legend>
-			<label for="TPC">台電座標：</label>
-			<input type="text" id="TPC" value="R1998EE79"><br>
-			<label for="TPCOut">T67座標：</label>
-			<output id="TPCOut"></output><br>
-			<button id="TPCC" type="button">轉換</button>
+		<fieldset id="A">
+			<legend>台電座標、T67座標轉換</legend>
+			<label for="ATPC">台電座標：</label>
+			<input type="text" id="ATPC" value="R1998EE79"><br>
+			<label for="AT67X">T67座標X：</label>
+			<input type="text" id="AT67X">
+			<label for="AT67Y">Y：</label>
+			<input type="text" id="AT67Y"><br>
+			<button id="ATPCC" type="button">TPC轉T67</button>
+			<button id="AT67C" type="button">T67轉TPC</button>
 		</fieldset>
-		<fieldset>
-			<legend>T67座標轉台電座標</legend>
-			<label for="T67X">T67座標 X：</label>
-			<input type="number" id="T67X" value="265670">
-			<label for="T67Y">Y:</label>
-			<input type="number" id="T67Y" value="2549490"><br>
-			<label for="T67Out">台電座標：</label>
-			<output id="T67Out"></output><br>
-			<button id="T67C" type="button">轉換</button>
+		<fieldset id="B">
+			<legend>T67、T97座標轉換</legend>
+			<label for="BT67X">T67座標X：</label>
+			<input type="text" id="BT67X" value="265670">
+			<label for="BT67Y">Y：</label>
+			<input type="text" id="BT67Y" value="2549490"><br>
+			<label for="BT97X">T97座標X：</label>
+			<input type="text" id="BT97X">
+			<label for="BT97Y">Y：</label>
+			<input type="text" id="BT97Y"><br>
+			<button id="BT67C" type="button">T67轉T97</button>
+			<button id="BT97C" type="button">T97轉T67</button>
+		</fieldset>
+		<fieldset id="C">
+			<legend>T97、WGS84座標轉換</legend>
+			<label for="CT97X">T97座標X：</label>
+			<input type="text" id="CT97X" value="266498.54045259">
+			<label for="CT97Y">Y：</label>
+			<input type="text" id="CT97Y" value="2549282.62403417"><br>
+			<label for="CWGS84Lat">WGS84座標Lat：</label>
+			<input type="text" id="CWGS84Lat">
+			<label for="CWGS84Lon">Lon：</label>
+			<input type="text" id="CWGS84Lon"><br>
+			<button id="CT97C" type="button">T97轉WGS84</button>
+			<button id="CWGS84C" type="button">WGS84轉T97</button>
 		</fieldset>
 	</form>
 </body>

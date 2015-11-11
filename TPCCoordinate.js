@@ -42,8 +42,8 @@ var TPCCConvert=(function namespace(){
 		}
 		T67.X-=base.X;
 		T67.Y-=base.Y;
-		temp+=Math.floor(T67.X/800).toString();
-		temp+=Math.floor(T67.Y/500).toString();
+		temp+=padLeft(Math.floor(T67.X/800).toString(),2,"0");
+		temp+=padLeft(Math.floor(T67.Y/500).toString(),2,"0");
 		T67.X%=800;
 		T67.Y%=500;
 		temp+=alphabet[Math.floor(T67.X/100)];
@@ -140,7 +140,7 @@ var TPCCConvert=(function namespace(){
 
 		return {
 			X:x,
-			Y:y
+			Y:y+7
 		};
 	}
 	function TPCToT97(TPC){
@@ -169,6 +169,15 @@ var TPCCConvert=(function namespace(){
 			}
 		}
 		return obj;
+	}
+	function padLeft(str,length,paddingChar){
+		paddingChar=paddingChar||" ";
+		if(str.length>=length){
+			return str;
+		}
+		else{
+			return Array(length-str.length+1).join(paddingChar)+str;
+		}
 	}
 
 	var origins={
@@ -298,7 +307,6 @@ var TPCCConvert=(function namespace(){
 	parameter.T97WGS84.E1=(parameter.T97WGS84.A-parameter.T97WGS84.B);
 	parameter.T97WGS84.E1/=parameter.T97WGS84.A+parameter.T97WGS84.B;
 	parameter.T97WGS84.E2=Math.pow(parameter.T97WGS84.A/parameter.T97WGS84.B,2)-1;
-	console.log(parameter);
 	return {
 		TPCToT67:TPCToT67,
 		T67ToTPC:T67ToTPC,
