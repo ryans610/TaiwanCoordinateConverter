@@ -3,21 +3,21 @@ var TPCCConvert=(function namespace(){
 		TPC=TPC.replace(/ /g,"").toUpperCase();
 		var temp=Object.create(origins[TPC[0]]);
 		if(TPC[0]==="Z"&&Number(TPC.substring(1,3))<51){	//金門
-			temp.X+=80000;
+			temp.x+=80000;
 		}
-		temp.X+=Number(TPC.substring(1,3))*800;
-		temp.Y+=Number(TPC.substring(3,5))*500;
+		temp.x+=Number(TPC.substring(1,3))*800;
+		temp.y+=Number(TPC.substring(3,5))*500;
 		if(TPC.length>=7){
-			temp.X+=alphabet.indexOf(TPC[5])*100;
-			temp.Y+=alphabet.indexOf(TPC[6])*100;
+			temp.x+=alphabet.indexOf(TPC[5])*100;
+			temp.y+=alphabet.indexOf(TPC[6])*100;
 		}
 		if(TPC.length>=9){
-			temp.X+=Number(TPC[7])*10;
-			temp.Y+=Number(TPC[8])*10;
+			temp.x+=Number(TPC[7])*10;
+			temp.y+=Number(TPC[8])*10;
 		}
 		if(TPC.length>=11){
-			temp.X+=Number(TPC[9]);
-			temp.Y+=Number(TPC[10]);
+			temp.x+=Number(TPC[9]);
+			temp.y+=Number(TPC[10]);
 		}
 		return temp;
 	}
@@ -26,50 +26,50 @@ var TPCCConvert=(function namespace(){
 		var temp="";
 		var base;
 		for(var p in origins){
-			var x=origins[p].X;
-			var y=origins[p].Y;
-			if(T67.X>=x&&T67.X<x+80000&&T67.Y>=y&&T67.Y<y+50000){
+			var x=origins[p].x;
+			var y=origins[p].y;
+			if(T67.x>=x&&T67.x<x+80000&&T67.y>=y&&T67.y<y+50000){
 				temp+=p;
 				base=origins[p];
 				break;
 			}
 		}
-		if(T67.X>=origins["Z"].X+80000&&T67.X<origins["Z"].X+160000
-			&&T67.Y>=origins["Z"].Y&&T67.Y<origins["Z"].Y+50000){	//金門
+		if(T67.x>=origins["Z"].x+80000&&T67.x<origins["Z"].x+160000
+			&&T67.y>=origins["Z"].y&&T67.y<origins["Z"].y+50000){	//金門
 			temp+="Z";
 			base=origins["Z"];
-			T67.X-=80000;
+			T67.x-=80000;
 		}
-		T67.X-=base.X;
-		T67.Y-=base.Y;
-		temp+=padLeft(Math.floor(T67.X/800).toString(),2,"0");
-		temp+=padLeft(Math.floor(T67.Y/500).toString(),2,"0");
-		T67.X%=800;
-		T67.Y%=500;
-		temp+=alphabet[Math.floor(T67.X/100)];
-		temp+=alphabet[Math.floor(T67.Y/100)];
-		T67.X%=100;
-		T67.Y%=100;
-		temp+=Math.floor(T67.X/10).toString();
-		temp+=Math.floor(T67.Y/10).toString();
-		T67.X%=10;
-		T67.Y%=10;
-		temp+=Math.floor(T67.X).toString();
-		temp+=Math.floor(T67.Y).toString();
+		T67.x-=base.x;
+		T67.y-=base.y;
+		temp+=padLeft(Math.floor(T67.x/800).toString(),2,"0");
+		temp+=padLeft(Math.floor(T67.y/500).toString(),2,"0");
+		T67.x%=800;
+		T67.y%=500;
+		temp+=alphabet[Math.floor(T67.x/100)];
+		temp+=alphabet[Math.floor(T67.y/100)];
+		T67.x%=100;
+		T67.y%=100;
+		temp+=Math.floor(T67.x/10).toString();
+		temp+=Math.floor(T67.y/10).toString();
+		T67.x%=10;
+		T67.y%=10;
+		temp+=Math.floor(T67.x).toString();
+		temp+=Math.floor(T67.y).toString();
 		return temp;
 	}
 	function T67ToT97(T67){
 		var T67=objectPrase(Object.create(T67));
 		return {
-			X:T67.X+parameter.T67T97.X+parameter.T67T97.A*T67.X+parameter.T67T97.B*T67.Y,
-			Y:T67.Y-parameter.T67T97.Y+parameter.T67T97.A*T67.Y+parameter.T67T97.B*T67.X
+			x:T67.x+parameter.T67T97.x+parameter.T67T97.A*T67.x+parameter.T67T97.B*T67.y,
+			y:T67.y-parameter.T67T97.y+parameter.T67T97.A*T67.y+parameter.T67T97.B*T67.x
 		};
 	}
 	function T97ToT67(T97){
 		var T97=objectPrase(Object.create(T97));
 		return {
-			X:T97.X-parameter.T67T97.X-parameter.T67T97.A*T97.X-parameter.T67T97.B*T97.Y,
-			Y:T97.Y+parameter.T67T97.Y-parameter.T67T97.A*T97.Y-parameter.T67T97.B*T97.X
+			x:T97.x-parameter.T67T97.x-parameter.T67T97.A*T97.x-parameter.T67T97.B*T97.y,
+			y:T97.y+parameter.T67T97.y-parameter.T67T97.A*T97.y-parameter.T67T97.B*T97.x
 		};
 	}
 	function T97ToWGS84(T97){
@@ -81,9 +81,9 @@ var TPCCConvert=(function namespace(){
 		var e1=parameter.T97WGS84.E1;
 		var e2=parameter.T97WGS84.E2;
 
-		T97.X-=parameter.T97WGS84.DX;
-		T97.Y-=parameter.T97WGS84.DY;
-		var M=T97.Y/parameter.T97WGS84.K0;
+		T97.x-=parameter.T97WGS84.DX;
+		T97.y-=parameter.T97WGS84.DY;
+		var M=T97.y/parameter.T97WGS84.K0;
 		var mu=M/(a*(1-Math.pow(e,2)/4-3*Math.pow(e,4)/64-5*Math.pow(e,6)/256));
 		var j1=(48*e1-27*Math.pow(e1,3))/32;
 		var j2=(42*Math.pow(e1,2)-55*Math.pow(e1,4))/32;
@@ -94,7 +94,7 @@ var TPCCConvert=(function namespace(){
 		var t=Math.pow(Math.tan(fp),2);
 		var r=a*(1-Math.pow(e,2))/Math.pow(1-Math.pow(e*Math.sin(fp),2),1.5);
 		var n=a/Math.sqrt(1-Math.pow(e*Math.sin(fp),2));
-		var d=T97.X/(n*parameter.T97WGS84.K0);
+		var d=T97.x/(n*parameter.T97WGS84.K0);
 		j1=n*Math.tan(fp)/r;
 		j2=Math.pow(d,2)/2;
 		j3=(5+3*t+10*c-4*Math.pow(c,2)-9*e2)*Math.pow(d,4)/24;
@@ -104,14 +104,14 @@ var TPCCConvert=(function namespace(){
 		j2=(5-2*c+28*t-3*Math.pow(c,2)+8*e2+24*Math.pow(t,2))*Math.pow(d,5)/120;
 		var lon=(parameter.T97WGS84.LON0+(d-j1+j2)/Math.cos(fp))*180/Math.PI;
 		return {
-			Lat:lat,
-			Lon:lon
+			lat:lat,
+			lng:lon
 		};
 	}
 	function WGS84ToT97(WGS84){
 		var WGS84=objectPrase(Object.create(WGS84));
-		var lon=WGS84.Lon*Math.PI/180;
-		var lat=WGS84.Lat*Math.PI/180;
+		var lon=WGS84.lng*Math.PI/180;
+		var lat=WGS84.lat*Math.PI/180;
 
 		var a=parameter.T97WGS84.A;
 		var b=parameter.T97WGS84.B;
@@ -139,8 +139,8 @@ var TPCCConvert=(function namespace(){
 		x=p1*p+p2*Math.pow(p,3)+parameter.T97WGS84.DX;
 
 		return {
-			X:x,
-			Y:y+7
+			x:x,
+			y:y+7
 		};
 	}
 	function TPCToT97(TPC){
@@ -182,108 +182,108 @@ var TPCCConvert=(function namespace(){
 
 	var origins={
 		A:{
-			X:170000,
-			Y:2750000
+			x:170000,
+			y:2750000
 		},
 		B:{
-			X:250000,
-			Y:2750000
+			x:250000,
+			y:2750000
 		},
 		C:{
-			X:330000,
-			Y:2750000
+			x:330000,
+			y:2750000
 		},
 		D:{
-			X:170000,
-			Y:2700000
+			x:170000,
+			y:2700000
 		},
 		E:{
-			X:250000,
-			Y:2700000
+			x:250000,
+			y:2700000
 		},
 		F:{
-			X:330000,
-			Y:2700000
+			x:330000,
+			y:2700000
 		},
 		G:{
-			X:170000,
-			Y:2650000
+			x:170000,
+			y:2650000
 		},
 		H:{
-			X:250000,
-			Y:2650000
+			x:250000,
+			y:2650000
 		},
 		I:{
-			X:330000,
-			Y:2650000
+			x:330000,
+			y:2650000
 		},
 		J:{
-			X:90000,
-			Y:2600000
+			x:90000,
+			y:2600000
 		},
 		K:{
-			X:170000,
-			Y:2600000
+			x:170000,
+			y:2600000
 		},
 		L:{
-			X:250000,
-			Y:2600000
+			x:250000,
+			y:2600000
 		},
 		M:{
-			X:90000,
-			Y:2550000
+			x:90000,
+			y:2550000
 		},
 		N:{
-			X:170000,
-			Y:2550000
+			x:170000,
+			y:2550000
 		},
 		O:{
-			X:250000,
-			Y:2550000
+			x:250000,
+			y:2550000
 		},
 		P:{
-			X:90000,
-			Y:2500000
+			x:90000,
+			y:2500000
 		},
 		Q:{
-			X:170000,
-			Y:2500000
+			x:170000,
+			y:2500000
 		},
 		R:{
-			X:250000,
-			Y:2500000
+			x:250000,
+			y:2500000
 		},
 		S:{	//馬祖
-			X:10000,
-			Y:2894000
+			x:10000,
+			y:2894000
 		},
 		T:{
-			X:170000,
-			Y:2450000
+			x:170000,
+			y:2450000
 		},
 		U:{
-			X:250000,
-			Y:2450000
+			x:250000,
+			y:2450000
 		},
 		V:{
-			X:170000,
-			Y:2400000
+			x:170000,
+			y:2400000
 		},
 		W:{	//蘭嶼
-			X:250000,
-			Y:2400000
+			x:250000,
+			y:2400000
 		},
-		X:{	//澎湖
-			X:10000,
-			Y:2614000
+		x:{	//澎湖
+			x:10000,
+			y:2614000
 		},
-		Y:{	//澎湖
-			X:10000,
-			Y:2564000
+		y:{	//澎湖
+			x:10000,
+			y:2564000
 		},
 		Z:{	//金門
-			X:10000,
-			Y:2675800
+			x:10000,
+			y:2675800
 		}
 	};
 	var alphabet="ABCDEFGHIJKLMNOPQRSTUVWXYZ";
@@ -291,8 +291,8 @@ var TPCCConvert=(function namespace(){
 		T67T97:{
 			A:0.00001549,
 			B:0.000006521,
-			X:807.8,
-			Y:248.6,
+			x:807.8,
+			y:248.6,
 		},
 		T97WGS84:{
 			A:6378137,

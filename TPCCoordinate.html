@@ -10,46 +10,46 @@
 		window.onload=function(){
 			document.getElementById("ATPCC").addEventListener("click",function(){
 				var c=TPCCConvert.TPCToT67(document.getElementById("ATPC").value);
-				document.getElementById("AT67X").value=c.X;
-				document.getElementById("AT67Y").value=c.Y;
+				document.getElementById("AT67X").value=c.x;
+				document.getElementById("AT67Y").value=c.y;
 			});
 			document.getElementById("AT67C").addEventListener("click",function(){
 				document.getElementById("ATPC").value=TPCCConvert.T67ToTPC({
-					X:document.getElementById("AT67X").value,
-					Y:document.getElementById("AT67Y").value
+					x:document.getElementById("AT67X").value,
+					y:document.getElementById("AT67Y").value
 				});
 			});
 			document.getElementById("BT67C").addEventListener("click",function(){
 				var c=TPCCConvert.T67ToT97({
-					X:document.getElementById("BT67X").value,
-					Y:document.getElementById("BT67Y").value
+					x:document.getElementById("BT67X").value,
+					y:document.getElementById("BT67Y").value
 				});
-				document.getElementById("BT97X").value=c.X;
-				document.getElementById("BT97Y").value=c.Y;
+				document.getElementById("BT97X").value=c.x;
+				document.getElementById("BT97Y").value=c.y;
 			});
 			document.getElementById("BT97C").addEventListener("click",function(){
 				var c=TPCCConvert.T97ToT67({
-					X:document.getElementById("BT97X").value,
-					Y:document.getElementById("BT97Y").value
+					x:document.getElementById("BT97X").value,
+					y:document.getElementById("BT97Y").value
 				});
-				document.getElementById("BT67X").value=c.X;
-				document.getElementById("BT67Y").value=c.Y;
+				document.getElementById("BT67X").value=c.x;
+				document.getElementById("BT67Y").value=c.y;
 			});
 			document.getElementById("CT97C").addEventListener("click",function(){
 				var c=TPCCConvert.T97ToWGS84({
-					X:document.getElementById("CT97X").value,
-					Y:document.getElementById("CT97Y").value
+					x:document.getElementById("CT97X").value,
+					y:document.getElementById("CT97Y").value
 				});
-				document.getElementById("CWGS84Lat").value=c.Lat;
-				document.getElementById("CWGS84Lon").value=c.Lon;
+				document.getElementById("CWGS84Lat").value=c.lat;
+				document.getElementById("CWGS84Lon").value=c.lng;
 			});
 			document.getElementById("CWGS84C").addEventListener("click",function(){
 				var c=TPCCConvert.WGS84ToT97({
-					Lat:document.getElementById("CWGS84Lat").value,
-					Lon:document.getElementById("CWGS84Lon").value
+					lat:document.getElementById("CWGS84Lat").value,
+					lng:document.getElementById("CWGS84Lon").value
 				});
-				document.getElementById("CT97X").value=c.X;
-				document.getElementById("CT97Y").value=c.Y;
+				document.getElementById("CT97X").value=c.x;
+				document.getElementById("CT97Y").value=c.y;
 			});
 		};
 	</script>
