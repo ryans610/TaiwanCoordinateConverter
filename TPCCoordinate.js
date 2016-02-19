@@ -1,7 +1,7 @@
 var TPCCConvert=(function namespace(){
 	function TPCToT67(TPC){
 		TPC=TPC.replace(/ /g,"").toUpperCase();
-		var temp=Object.create(origins[TPC[0]]);
+		var temp=objectClone(origins[TPC[0]]);
 		if(TPC[0]==="Z"&&Number(TPC.substring(1,3))<51){	//金門
 			temp.x+=80000;
 		}
@@ -22,7 +22,7 @@ var TPCCConvert=(function namespace(){
 		return temp;
 	}
 	function T67ToTPC(T67){
-		var T67=objectPrase(Object.create(T67));
+		var T67=objectPrase(objectClone(T67));
 		var temp="";
 		var base;
 		for(var p in origins){
@@ -59,21 +59,21 @@ var TPCCConvert=(function namespace(){
 		return temp;
 	}
 	function T67ToT97(T67){
-		var T67=objectPrase(Object.create(T67));
+		var T67=objectPrase(objectClone(T67));
 		return {
 			x:T67.x+parameter.T67T97.x+parameter.T67T97.A*T67.x+parameter.T67T97.B*T67.y,
 			y:T67.y-parameter.T67T97.y+parameter.T67T97.A*T67.y+parameter.T67T97.B*T67.x
 		};
 	}
 	function T97ToT67(T97){
-		var T97=objectPrase(Object.create(T97));
+		var T97=objectPrase(objectClone(T97));
 		return {
 			x:T97.x-parameter.T67T97.x-parameter.T67T97.A*T97.x-parameter.T67T97.B*T97.y,
 			y:T97.y+parameter.T67T97.y-parameter.T67T97.A*T97.y-parameter.T67T97.B*T97.x
 		};
 	}
 	function T97ToWGS84(T97){
-		var T97=objectPrase(Object.create(T97));
+		var T97=objectPrase(objectClone(T97));
 
 		var a=parameter.T97WGS84.A;
 		var b=parameter.T97WGS84.B;
@@ -109,7 +109,7 @@ var TPCCConvert=(function namespace(){
 		};
 	}
 	function WGS84ToT97(WGS84){
-		var WGS84=objectPrase(Object.create(WGS84));
+		var WGS84=objectPrase(objectClone(WGS84));
 		var lon=WGS84.lng*Math.PI/180;
 		var lat=WGS84.lat*Math.PI/180;
 
@@ -179,6 +179,10 @@ var TPCCConvert=(function namespace(){
 			return Array(length-str.length+1).join(paddingChar)+str;
 		}
 	}
+    function objectClone(obj){
+        var json=JSON.stringify(obj);
+        return JSON.parse(json);
+    }
 
 	var origins={
 		A:{
