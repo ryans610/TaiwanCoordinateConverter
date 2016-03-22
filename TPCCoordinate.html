@@ -61,6 +61,13 @@
 				});
 				document.getElementById("WGS84Distance").value=d;
 			});
+			document.getElementById("ETPCC").addEventListener("click",function(){
+				var d=TPCCConvert.TPCDistance(
+					document.getElementById("ETPCA").value,
+					document.getElementById("ETPCB").value
+				);
+				document.getElementById("TPCDistance").value=d;
+			});
 		};
 	</script>
 	<form action="">
@@ -117,6 +124,19 @@
 			<input type="text" id="WGS84Distance" readonly>
 			<br>
 			<button id="DWGS84C" type="button">計算兩點間距</button>
+		</fieldset>
+		<fieldset id="E">
+			<legend>TPC座標距離計算</legend>
+			<label for="ETPCA">A點：</label>
+			<input type="text" id="ETPCA" value="B6536HA6551">
+			<br>
+			<label for="ETPCB">B點：</label>
+			<input type="text" id="ETPCB" value="B6536ED7841">
+			<br>
+			<label for="TPCDistance">距離：</label>
+			<input type="text" id="TPCDistance" readonly>
+			<br>
+			<button id="ETPCC" type="button">計算兩點間距</button>
 		</fieldset>
 	</form>
 </body>
