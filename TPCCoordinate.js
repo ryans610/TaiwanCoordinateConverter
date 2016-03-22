@@ -161,6 +161,20 @@ var TPCCConvert=(function namespace(){
 	function WGS84ToTPC(WGS84){
 		return T67ToTPC(WGS84ToT67(WGS84));
 	}
+	function WGS84Distance(p1,p2){
+		var lat1=p1.lat;
+		var lat2=p2.lat;
+		var lng1=p1.lng;
+		var lng2=p2.lng;
+		var radlat1=rad(lat1);
+		var radlat2=rad(lat2);
+		var dlat=Math.abs(radlat1-radlat2);
+		var dlng=Math.abs(rad(lng1)-rad(lng2));
+		var t=Math.pow(Math.sin(dlat/2),2)+Math.cos(radlat1)*Math.cos(radlat2)*Math.pow(Math.sin(dlng/2),2);
+		var arc=2*Math.asin(Math.sqrt(t));
+		var d=arc*parameter.EARTH_RADIUS;
+		return d;
+	}
 
 	function objectPrase(obj){
 		for(var p in obj){
@@ -181,6 +195,9 @@ var TPCCConvert=(function namespace(){
 	}
     function objectClone(obj){
         return JSON.parse(JSON.stringify(obj));
+    }
+    function rad(d){
+    	return d*Math.PI/180;
     }
 
 	var origins={
@@ -305,6 +322,7 @@ var TPCCConvert=(function namespace(){
 			DX:250000,
 			DY:0,
 		},
+		EARTH_RADIUS:6378137,
 	};
 	parameter.T97WGS84.E=Math.sqrt(1-Math.pow(parameter.T97WGS84.B/parameter.T97WGS84.A,2));
 	parameter.T97WGS84.E1=(parameter.T97WGS84.A-parameter.T97WGS84.B);
@@ -323,5 +341,14 @@ var TPCCConvert=(function namespace(){
 		WGS84ToT67:WGS84ToT67,
 		TPCToWGS84:TPCToWGS84,
 		WGS84ToTPC:WGS84ToTPC,
+		WGS84Distance:WGS84Distance,
 	};
 }());
+
+var p1={
+                lat: 25.017740,
+                lng: 121.531041,}
+
+var p2={
+                lat: 25.020729,
+                lng: 121.528174,}
