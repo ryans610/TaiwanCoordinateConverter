@@ -1,143 +1,143 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-	<meta charset="UTF-8">
-	<title>TPC Coordinate Convert</title>
-	<script src="TPCCoordinate.js"></script>
+    <meta charset="UTF-8">
+    <title>TPC Coordinate Convert</title>
+    <script src="TPCCoordinate.js"></script>
 </head>
 <body>
-	<script>
-		window.onload=function(){
-			document.getElementById("ATPCC").addEventListener("click",function(){
-				var c=TPCCConvert.TPCToT67(document.getElementById("ATPC").value);
-				document.getElementById("AT67X").value=c.x;
-				document.getElementById("AT67Y").value=c.y;
-			});
-			document.getElementById("AT67C").addEventListener("click",function(){
-				document.getElementById("ATPC").value=TPCCConvert.T67ToTPC({
-					x:document.getElementById("AT67X").value,
-					y:document.getElementById("AT67Y").value
-				});
-			});
-			document.getElementById("BT67C").addEventListener("click",function(){
-				var c=TPCCConvert.T67ToT97({
-					x:document.getElementById("BT67X").value,
-					y:document.getElementById("BT67Y").value
-				});
-				document.getElementById("BT97X").value=c.x;
-				document.getElementById("BT97Y").value=c.y;
-			});
-			document.getElementById("BT97C").addEventListener("click",function(){
-				var c=TPCCConvert.T97ToT67({
-					x:document.getElementById("BT97X").value,
-					y:document.getElementById("BT97Y").value
-				});
-				document.getElementById("BT67X").value=c.x;
-				document.getElementById("BT67Y").value=c.y;
-			});
-			document.getElementById("CT97C").addEventListener("click",function(){
-				var c=TPCCConvert.T97ToWGS84({
-					x:document.getElementById("CT97X").value,
-					y:document.getElementById("CT97Y").value
-				});
-				document.getElementById("CWGS84Lat").value=c.lat;
-				document.getElementById("CWGS84Lon").value=c.lng;
-			});
-			document.getElementById("CWGS84C").addEventListener("click",function(){
-				var c=TPCCConvert.WGS84ToT97({
-					lat:document.getElementById("CWGS84Lat").value,
-					lng:document.getElementById("CWGS84Lon").value
-				});
-				document.getElementById("CT97X").value=c.x;
-				document.getElementById("CT97Y").value=c.y;
-			});
-			document.getElementById("DWGS84C").addEventListener("click",function(){
-				var d=TPCCConvert.WGS84Distance({
-					lat:document.getElementById("DWGS84ALat").value,
-					lng:document.getElementById("DWGS84ALng").value
-				},{
-					lat:document.getElementById("DWGS84BLat").value,
-					lng:document.getElementById("DWGS84BLng").value
-				});
-				document.getElementById("WGS84Distance").value=d;
-			});
-			document.getElementById("ETPCC").addEventListener("click",function(){
-				var d=TPCCConvert.TPCDistance(
-					document.getElementById("ETPCA").value,
-					document.getElementById("ETPCB").value
-				);
-				document.getElementById("TPCDistance").value=d;
-			});
-		};
-	</script>
-	<form action="">
-		<fieldset id="A">
-			<legend>台電座標、T67座標轉換</legend>
-			<label for="ATPC">台電座標：</label>
-			<input type="text" id="ATPC" value="R1998EE79"><br>
-			<label for="AT67X">T67座標X：</label>
-			<input type="text" id="AT67X">
-			<label for="AT67Y">Y：</label>
-			<input type="text" id="AT67Y"><br>
-			<button id="ATPCC" type="button">TPC轉T67</button>
-			<button id="AT67C" type="button">T67轉TPC</button>
-		</fieldset>
-		<fieldset id="B">
-			<legend>T67、T97座標轉換</legend>
-			<label for="BT67X">T67座標X：</label>
-			<input type="text" id="BT67X" value="265670">
-			<label for="BT67Y">Y：</label>
-			<input type="text" id="BT67Y" value="2549490"><br>
-			<label for="BT97X">T97座標X：</label>
-			<input type="text" id="BT97X">
-			<label for="BT97Y">Y：</label>
-			<input type="text" id="BT97Y"><br>
-			<button id="BT67C" type="button">T67轉T97</button>
-			<button id="BT97C" type="button">T97轉T67</button>
-		</fieldset>
-		<fieldset id="C">
-			<legend>T97、WGS84座標轉換</legend>
-			<label for="CT97X">T97座標X：</label>
-			<input type="text" id="CT97X" value="266498.54045259">
-			<label for="CT97Y">Y：</label>
-			<input type="text" id="CT97Y" value="2549282.62403417"><br>
-			<label for="CWGS84Lat">WGS84座標Lat：</label>
-			<input type="text" id="CWGS84Lat">
-			<label for="CWGS84Lon">Lon：</label>
-			<input type="text" id="CWGS84Lon"><br>
-			<button id="CT97C" type="button">T97轉WGS84</button>
-			<button id="CWGS84C" type="button">WGS84轉T97</button>
-		</fieldset>
-		<fieldset id="D">
-			<legend>WGS84座標距離計算</legend>
-			<label for="DWGS84ALat">A點Lat：</label>
-			<input type="text" id="DWGS84ALat" value="25.01774">
-			<label for="DWGS84ALng">Lng：</label>
-			<input type="text" id="DWGS84ALng" value="121.531041">
-			<br>
-			<label for="DWGS84BLat">B點Lat：</label>
-			<input type="text" id="DWGS84BLat" value="25.020729">
-			<label for="DWGS84BLng">Lng：</label>
-			<input type="text" id="DWGS84BLng" value="121.528174">
-			<br>
-			<label for="WGS84Distance">距離：</label>
-			<input type="text" id="WGS84Distance" readonly>
-			<br>
-			<button id="DWGS84C" type="button">計算兩點間距</button>
-		</fieldset>
-		<fieldset id="E">
-			<legend>TPC座標距離計算</legend>
-			<label for="ETPCA">A點：</label>
-			<input type="text" id="ETPCA" value="B6536HA6551">
-			<br>
-			<label for="ETPCB">B點：</label>
-			<input type="text" id="ETPCB" value="B6536ED7841">
-			<br>
-			<label for="TPCDistance">距離：</label>
-			<input type="text" id="TPCDistance" readonly>
-			<br>
-			<button id="ETPCC" type="button">計算兩點間距</button>
-		</fieldset>
-	</form>
+    <script>
+        window.onload=function(){
+            document.getElementById("ATPCC").addEventListener("click",function(){
+                var c=TPCCConvert.TPCToT67(document.getElementById("ATPC").value);
+                document.getElementById("AT67X").value=c.x;
+                document.getElementById("AT67Y").value=c.y;
+            });
+            document.getElementById("AT67C").addEventListener("click",function(){
+                document.getElementById("ATPC").value=TPCCConvert.T67ToTPC({
+                    x:document.getElementById("AT67X").value,
+                    y:document.getElementById("AT67Y").value
+                });
+            });
+            document.getElementById("BT67C").addEventListener("click",function(){
+                var c=TPCCConvert.T67ToT97({
+                    x:document.getElementById("BT67X").value,
+                    y:document.getElementById("BT67Y").value
+                });
+                document.getElementById("BT97X").value=c.x;
+                document.getElementById("BT97Y").value=c.y;
+            });
+            document.getElementById("BT97C").addEventListener("click",function(){
+                var c=TPCCConvert.T97ToT67({
+                    x:document.getElementById("BT97X").value,
+                    y:document.getElementById("BT97Y").value
+                });
+                document.getElementById("BT67X").value=c.x;
+                document.getElementById("BT67Y").value=c.y;
+            });
+            document.getElementById("CT97C").addEventListener("click",function(){
+                var c=TPCCConvert.T97ToWGS84({
+                    x:document.getElementById("CT97X").value,
+                    y:document.getElementById("CT97Y").value
+                });
+                document.getElementById("CWGS84Lat").value=c.lat;
+                document.getElementById("CWGS84Lon").value=c.lng;
+            });
+            document.getElementById("CWGS84C").addEventListener("click",function(){
+                var c=TPCCConvert.WGS84ToT97({
+                    lat:document.getElementById("CWGS84Lat").value,
+                    lng:document.getElementById("CWGS84Lon").value
+                });
+                document.getElementById("CT97X").value=c.x;
+                document.getElementById("CT97Y").value=c.y;
+            });
+            document.getElementById("DWGS84C").addEventListener("click",function(){
+                var d=TPCCConvert.WGS84Distance({
+                    lat:document.getElementById("DWGS84ALat").value,
+                    lng:document.getElementById("DWGS84ALng").value
+                },{
+                    lat:document.getElementById("DWGS84BLat").value,
+                    lng:document.getElementById("DWGS84BLng").value
+                });
+                document.getElementById("WGS84Distance").value=d;
+            });
+            document.getElementById("ETPCC").addEventListener("click",function(){
+                var d=TPCCConvert.TPCDistance(
+                    document.getElementById("ETPCA").value,
+                    document.getElementById("ETPCB").value
+                );
+                document.getElementById("TPCDistance").value=d;
+            });
+        };
+    </script>
+    <form action="">
+        <fieldset id="A">
+            <legend>台電座標、T67座標轉換</legend>
+            <label for="ATPC">台電座標：</label>
+            <input type="text" id="ATPC" value="R1998EE79"><br>
+            <label for="AT67X">T67座標X：</label>
+            <input type="text" id="AT67X">
+            <label for="AT67Y">Y：</label>
+            <input type="text" id="AT67Y"><br>
+            <button id="ATPCC" type="button">TPC轉T67</button>
+            <button id="AT67C" type="button">T67轉TPC</button>
+        </fieldset>
+        <fieldset id="B">
+            <legend>T67、T97座標轉換</legend>
+            <label for="BT67X">T67座標X：</label>
+            <input type="text" id="BT67X" value="265670">
+            <label for="BT67Y">Y：</label>
+            <input type="text" id="BT67Y" value="2549490"><br>
+            <label for="BT97X">T97座標X：</label>
+            <input type="text" id="BT97X">
+            <label for="BT97Y">Y：</label>
+            <input type="text" id="BT97Y"><br>
+            <button id="BT67C" type="button">T67轉T97</button>
+            <button id="BT97C" type="button">T97轉T67</button>
+        </fieldset>
+        <fieldset id="C">
+            <legend>T97、WGS84座標轉換</legend>
+            <label for="CT97X">T97座標X：</label>
+            <input type="text" id="CT97X" value="266498.54045259">
+            <label for="CT97Y">Y：</label>
+            <input type="text" id="CT97Y" value="2549282.62403417"><br>
+            <label for="CWGS84Lat">WGS84座標Lat：</label>
+            <input type="text" id="CWGS84Lat">
+            <label for="CWGS84Lon">Lon：</label>
+            <input type="text" id="CWGS84Lon"><br>
+            <button id="CT97C" type="button">T97轉WGS84</button>
+            <button id="CWGS84C" type="button">WGS84轉T97</button>
+        </fieldset>
+        <fieldset id="D">
+            <legend>WGS84座標距離計算</legend>
+            <label for="DWGS84ALat">A點Lat：</label>
+            <input type="text" id="DWGS84ALat" value="25.01774">
+            <label for="DWGS84ALng">Lng：</label>
+            <input type="text" id="DWGS84ALng" value="121.531041">
+            <br>
+            <label for="DWGS84BLat">B點Lat：</label>
+            <input type="text" id="DWGS84BLat" value="25.020729">
+            <label for="DWGS84BLng">Lng：</label>
+            <input type="text" id="DWGS84BLng" value="121.528174">
+            <br>
+            <label for="WGS84Distance">距離：</label>
+            <input type="text" id="WGS84Distance" readonly>
+            <br>
+            <button id="DWGS84C" type="button">計算兩點間距</button>
+        </fieldset>
+        <fieldset id="E">
+            <legend>TPC座標距離計算</legend>
+            <label for="ETPCA">A點：</label>
+            <input type="text" id="ETPCA" value="B6536HA6551">
+            <br>
+            <label for="ETPCB">B點：</label>
+            <input type="text" id="ETPCB" value="B6536ED7841">
+            <br>
+            <label for="TPCDistance">距離：</label>
+            <input type="text" id="TPCDistance" readonly>
+            <br>
+            <button id="ETPCC" type="button">計算兩點間距</button>
+        </fieldset>
+    </form>
 </body>
 </html>
