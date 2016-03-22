@@ -344,11 +344,3 @@ var TPCCConvert=(function namespace(){
 		WGS84Distance:WGS84Distance,
 	};
 }());
-
-var p1={
-                lat: 25.017740,
-                lng: 121.531041,}
-
-var p2={
-                lat: 25.020729,
-                lng: 121.528174,}
