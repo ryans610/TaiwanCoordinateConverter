@@ -51,6 +51,16 @@
 				document.getElementById("CT97X").value=c.x;
 				document.getElementById("CT97Y").value=c.y;
 			});
+			document.getElementById("DWGS84C").addEventListener("click",function(){
+				var d=TPCCConvert.WGS84Distance({
+					lat:document.getElementById("DWGS84ALat").value,
+					lng:document.getElementById("DWGS84ALng").value
+				},{
+					lat:document.getElementById("DWGS84BLat").value,
+					lng:document.getElementById("DWGS84BLng").value
+				});
+				document.getElementById("WGS84Distance").value=d;
+			});
 		};
 	</script>
 	<form action="">
@@ -90,6 +100,23 @@
 			<input type="text" id="CWGS84Lon"><br>
 			<button id="CT97C" type="button">T97轉WGS84</button>
 			<button id="CWGS84C" type="button">WGS84轉T97</button>
+		</fieldset>
+		<fieldset id="D">
+			<legend>WGS84座標距離計算</legend>
+			<label for="DWGS84ALat">A點Lat：</label>
+			<input type="text" id="DWGS84ALat" value="25.01774">
+			<label for="DWGS84ALng">Lng：</label>
+			<input type="text" id="DWGS84ALng" value="121.531041">
+			<br>
+			<label for="DWGS84BLat">B點Lat：</label>
+			<input type="text" id="DWGS84BLat" value="25.020729">
+			<label for="DWGS84BLng">Lng：</label>
+			<input type="text" id="DWGS84BLng" value="121.528174">
+			<br>
+			<label for="WGS84Distance">距離：</label>
+			<input type="text" id="WGS84Distance" readonly>
+			<br>
+			<button id="DWGS84C" type="button">計算兩點間距</button>
 		</fieldset>
 	</form>
 </body>
