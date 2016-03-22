@@ -175,6 +175,15 @@ var TPCCConvert=(function namespace(){
 		var d=arc*parameter.EARTH_RADIUS;
 		return d;
 	}
+	function TPCDistance(p1,p2){
+		return WGS84Distance(TPCToWGS84(p1),TPCToWGS84(p2));
+	}
+	function T67Distance(p1,p2){
+		return WGS84Distance(T67ToWGS84(p1),T67ToWGS84(p2));
+	}
+	function T97Distance(p1,p2){
+		return WGS84Distance(T97ToWGS84(p1),T97ToWGS84(p2));
+	}
 
 	function objectPrase(obj){
 		for(var p in obj){
@@ -342,5 +351,8 @@ var TPCCConvert=(function namespace(){
 		TPCToWGS84:TPCToWGS84,
 		WGS84ToTPC:WGS84ToTPC,
 		WGS84Distance:WGS84Distance,
+		TPCDistance:TPCDistance,
+		T67Distance:T67Distance,
+		T97Distance:T97Distance,
 	};
 }());
