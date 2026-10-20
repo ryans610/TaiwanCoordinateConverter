@@ -136,7 +136,7 @@ var TPCCConvert=(function namespace(){
 
         p1=k0*nu*Math.cos(lat);
         p2=k0*nu*Math.pow(Math.cos(lat),3)*(1-Math.pow(Math.tan(lat),2)+e2*Math.pow(Math.cos(lat),2))/6;
-        x=p1*p+p2*Math.pow(p,3)+parameter.T97WGS84.DX;
+        var x=p1*p+p2*Math.pow(p,3)+parameter.T97WGS84.DX;
 
         return {
             x:x,
